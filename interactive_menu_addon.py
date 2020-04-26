@@ -5,7 +5,6 @@
 restaurant_name = "Simple Restaurant" # set our restaurant name
 subtotal = 0 # subtotal (starts at 0)
 tax_rate = 0.07 # tax rate
-tip_rate = 0.15 # tip rate
 
 menu = [("Nothing", 0), ("Sandwich", 5), ("Salad", 7.5), ("Fries", 3), ("Apple", .75), ("Soda", 1.5), ("Milk", 1)]# the menu variable is a list of tuples made up of strings for the names of food and drink items followed by their prices. the prices are in USD and can be either an integer or a floating point number.
 
@@ -31,11 +30,21 @@ if subtotal == 0: # if subtotal is 0
 	print("Not hungry?") # i guess you're not hungry
 else: # if subtotal is not not 0 (makes sense?)
 	tax = subtotal * tax_rate # calculate tax
-	tip = subtotal * tip_rate # calculate tip
+	tip_rate = 0 # make an initial tip rate variable (starting value of 0)
+	tip = 0 # make an initial tip variable (starting value of 0)
+	while True: # infinite while loop
+		try: # start a try/catch (try/except in python) statement
+			print("Please type a tip rate (in percentage).") # print some text to let the user know they need to type a tip rate
+			tip_rate = int(input()) # assign an integer of user input to tip_rate	
+			tip_rate = tip_rate * 0.01 # convert the tip_rate to a decimal place
+			tip = subtotal * tip_rate # calculate tip
+			break # break the infinite while loop
+		except SyntaxError: # if there's a syntax error (user doesn't type any tip rate)
+			print("You didn't type a tip rate.") # tell the user they didn't type a tip rate
 	total = subtotal + tax + tip # calculate subtotal
 	print("\nHere's your bill:") # print text to let the user know what's going on
 	print("Subtotal: ${0:.2f}".format(subtotal)) # print the subtotal
 	print("{rate:.0%} tax: ${amount:.2f}".format(rate=tax_rate, amount=tax)) # print the tax rate and total amount of tax
-	print("{rate:.0%} tip: ${amount:.2f}".format(rate=tip_rate, amount=tip)) # print the tip rate and total amount of tip
+	print("{rate:.0%} tip: ${amount:.2f}".format(rate=tip_rate, amount=tip))
 	print("Total: ${0:.2f}\n".format(total)) # print total
 	print("Thank you. Please come again!") # thank the user
